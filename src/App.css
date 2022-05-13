@@ -1,7 +1,7 @@
 .active{
   color:rgb(253, 10, 10);
 }
-.hero{
+.hero-bg{
   background-image: url(./assets/images/bg.png);
   background-position: center;
   background-size: cover;
@@ -55,3 +55,9 @@ color: var(--secondery);
   transition: height .2s linear, width .3s linear .2s;
 }
 /* navbar-button-edit */
+
+@media (min-width: 768px){
+  .ul-bg{
+    background-color: #6d0c0c;
+  }
+}
