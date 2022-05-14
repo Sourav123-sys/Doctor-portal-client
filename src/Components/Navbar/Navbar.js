@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { signOut } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase.init';
 const Navbar = () => {
+  const [user] = useAuthState(auth)
+  const logout = () => {
+    signOut(auth);
+};
+console.log(user)
     const menuItem = <>
     
     <li><NavLink className='nav-btn' to='/'>Home</NavLink></li>
@@ -10,7 +19,23 @@ const Navbar = () => {
               <li><NavLink className='nav-btn'to='/review'>Review</NavLink></li>
               <li><NavLink className='nav-btn'to='/contact'>Contact</NavLink></li>
               <li><NavLink className='nav-btn'to='/about'>About</NavLink></li>
-              <li><NavLink className='nav-btn'to='/login'>LogIn</NavLink></li>
+      {
+        user ?
+          <li style={{ cursor: 'pointer' }} className='flex justify-center items-center  nav-btn font-medium' onClick={logout}>
+            
+            <span className='text-red-500'>
+            Log-Out<FontAwesomeIcon icon={faSignOut} />
+            </span>
+            </li>
+          :
+          <li><NavLink className='nav-btn  ' to='/login'>
+            
+            <span className='text-blue-600 font-medium'>
+            Log-In
+          <FontAwesomeIcon icon={faSignIn} />
+            </span>
+          </NavLink></li>
+         }
     
     </>
     return (

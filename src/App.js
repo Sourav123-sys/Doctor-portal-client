@@ -9,7 +9,9 @@ import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
 import Review from './Components/Review/Review';
-
+import NMotFound from './Components/NotFound/NMotFound';
+import Register from './Components/Register/Register';
+import RequireAuth from './Components/RequireAuth/RequireAuth'
 function App() {
   return (
     <div >
@@ -19,9 +21,16 @@ function App() {
       <Route path='/' element={<Home />} />
       <Route path='/about' element={<About />} />
       <Route path='/login' element={<Login/>} />
+      <Route path='/register' element={<Register/>} />
       <Route path='/review' element={<Review/>} />
       <Route path='/contact' element={<Contact/>} />
-      <Route path='/appointment' element={<Appointment/>} />
+        <Route path='/appointment' element={
+          
+          <RequireAuth>
+<Appointment />
+          </RequireAuth>
+          } />
+      <Route path='*' element={<NMotFound/>} />
 
       </Routes>
       

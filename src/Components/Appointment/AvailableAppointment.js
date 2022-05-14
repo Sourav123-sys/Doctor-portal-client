@@ -7,12 +7,12 @@ const AvailableAppointment = ({ date }) => {
     const [services, setServices] = useState([])
     useEffect(() => {
         
-        fetch('data.json')
+        fetch('http://localhost:4000/appointment')
             .then(res => res.json())
         .then(data=>setServices(data))
     }, [])
     const [treatment, setTreatment] = useState({})
-    console.log(treatment,'treatment');
+    
     return (
         <div >
             <h1 className='mt-20 text-center font-bold text-secondary'> Available Appointment on:{format(date, 'PP')}</h1>
@@ -31,7 +31,9 @@ const AvailableAppointment = ({ date }) => {
                 }
             </div>
             {treatment && <BookingModal
-            treatment={treatment}
+                treatment={treatment}
+                setTreatment={setTreatment}
+                date={date}
             ></BookingModal>}
         </div>
     );
