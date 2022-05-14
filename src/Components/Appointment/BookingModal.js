@@ -1,18 +1,59 @@
 import React from 'react';
 import { format } from 'date-fns';
-const BookingModal = ({ treatment, date,setTreatment }) => {
-    const { name, slots } = treatment
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase.init';
+import { ToastContainer, toast } from 'react-toastify';
+const BookingModal = ({ treatment, date,setTreatment,refetch }) => {
+    const { _id,name, slots } = treatment
+    const [user] = useAuthState(auth)
+    
 
-    const handleBooking = e => {
-        
+    const FormatDate = format(date,"PP")
+    const handleBooking = e => { 
         e.preventDefault();
         const slot = e.target.slot.value
         const date = e.target.date.value
-        const name = e.target.name.value
-        const email= e.target.email.value
+        // const name = e.target.name.value
+        // const email= e.target.email.value
         const phone = e.target.phone.value
-        console.log(slot, name, email, phone, date);
-        setTreatment(null)  
+        // console.log(slot, name, email, phone, date);
+        const booking = {
+            treatmentId: _id,
+            treatment: name,
+            date: FormatDate,
+            slot,
+            patient:user?.email,
+            patientName: user?.displayName,
+            phone,
+        }
+        console.log(slot, phone, date);
+        
+        fetch('http://localhost:4000/booking', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toast.success(`Appointment is set, ${FormatDate} at ${slot}`)
+                }
+                else {
+                    toast.error(`Sorry!!! You already have an appointment on ,
+                     ${data?.booking?.data} at ${data?.booking?.slot}`)
+                }
+                
+                console.log(data);
+                refetch()
+                setTreatment(null)
+        })
+
+
+
+
+          
     }
     return (
         <div>
@@ -33,8 +74,8 @@ const BookingModal = ({ treatment, date,setTreatment }) => {
                            }
                         
                         </select>
-                        <input type="text"name='email' placeholder="enter your email" className="input input-bordered w-full max-w-xs" />
-                        <input type="text"name='name' placeholder="enter your name" className="input input-bordered w-full max-w-xs" />
+                        <input disabled type="text"name='email'value={user?.email} placeholder="enter your email" className="input input-bordered w-full max-w-xs" />
+                        <input disabled type="text"name='name'value={user?.displayName} placeholder="enter your name" className="input input-bordered w-full max-w-xs" />
                         <input type="number"name='phone' placeholder="enter your phone" className="input input-bordered w-full max-w-xs" />
                         <input type="submit" value="Submit" className="
                     
@@ -45,6 +86,7 @@ const BookingModal = ({ treatment, date,setTreatment }) => {
                     </form>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

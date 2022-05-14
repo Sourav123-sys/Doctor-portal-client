@@ -12,6 +12,7 @@ import Review from './Components/Review/Review';
 import NMotFound from './Components/NotFound/NMotFound';
 import Register from './Components/Register/Register';
 import RequireAuth from './Components/RequireAuth/RequireAuth'
+import Profile from './Components/Profile/Profile';
 function App() {
   return (
     <div >
@@ -23,7 +24,8 @@ function App() {
       <Route path='/login' element={<Login/>} />
       <Route path='/register' element={<Register/>} />
       <Route path='/review' element={<Review/>} />
-      <Route path='/contact' element={<Contact/>} />
+      <Route path='/review' element={<Review/>} />
+      <Route path='/profile' element={<Profile/>} />
         <Route path='/appointment' element={
           
           <RequireAuth>

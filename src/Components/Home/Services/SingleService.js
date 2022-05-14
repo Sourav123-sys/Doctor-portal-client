@@ -2,7 +2,7 @@ import React from 'react';
 
 const SingleService = (props) => {
     const { name, _id, slots,img } = props.send
-    console.log(props.send)
+   // console.log(props.send)
     return (
         <div class="card lg:max-w-lg bg-base-100 shadow-xl">
         <figure class="px-10 pt-10">

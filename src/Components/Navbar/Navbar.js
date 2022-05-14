@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignIn, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faSignIn, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase.init';
@@ -10,7 +10,7 @@ const Navbar = () => {
   const logout = () => {
     signOut(auth);
 };
-console.log(user)
+//console.log(user)
     const menuItem = <>
     
     <li><NavLink className='nav-btn' to='/'>Home</NavLink></li>
@@ -35,7 +35,12 @@ console.log(user)
           <FontAwesomeIcon icon={faSignIn} />
             </span>
           </NavLink></li>
-         }
+        
+      }
+      <li><NavLink className='nav-btn' to='/profile'>
+      <FontAwesomeIcon className='text-2xl'icon={faUser} />
+      
+      </NavLink></li>
     
     </>
     return (

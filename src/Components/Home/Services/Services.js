@@ -4,13 +4,7 @@ import cavity from '../../../assets/images/cavity.png'
 import whitening from '../../../assets/images/whitening.png'
 import SingleService from './SingleService';
 const Services = () => {
-    // const [service, setService] = useState([])
-    // console.log(service)
-    // useEffect(() => {
-    //     fetch('data.json')
-    //         .then(res => res.json())
-    //     .then(data => setService(data))
-    // },[])
+ 
     const service = [
         {
             "img":flowrite,

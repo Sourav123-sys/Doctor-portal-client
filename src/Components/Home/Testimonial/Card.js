@@ -2,7 +2,7 @@ import React from 'react';
 
 const Card = props => {
     const { _id, name, review, img, location } = props.send
-    console.log(props.send);
+    //console.log(props.send);
     return (
         <div className="card lg:max-w-lg bg-base-100 shadow-xl">
             <div className="card-body">

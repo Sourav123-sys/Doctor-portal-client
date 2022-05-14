@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase.init';
 import googleLogo from '../../Google__.svg.png'
 import { ToastContainer, toast } from 'react-toastify';
-import { useSendPasswordResetEmail, useSignInWithEmailAndPassword,useSignInWithGithub,useSignInWithGoogle} from 'react-firebase-hooks/auth';
+import { useAuthState, useSendPasswordResetEmail, useSignInWithEmailAndPassword,useSignInWithGithub,useSignInWithGoogle} from 'react-firebase-hooks/auth';
 import 'react-toastify/dist/ReactToastify.css';
 import githubLogo from '../../GitHub-Logo.wine.svg'
 import fbLogo from '../../Facebook_i.svg.png'
@@ -38,16 +38,18 @@ const Login = () => {
         signInWithEmailAndPassword(email,password);
 
     }
-
+const [user3] = useAuthState(auth)
     const navigate = useNavigate()
     const location = useLocation()
     const from = location?.state?.from?.pathname || '/'
-    if (user || user1) {
-        navigate(from,{replace:true})
-    }
+    useEffect(() => {
+        if (user || user1||user3) {
+            navigate(from,{replace:true})
+        }
+},[user,user1,user3,from,navigate])
     let errorMsg;
     if (error || error1 || error2 || error3) {
-    errorMsg = <p className='text-red-700'>Error : {error?.message} {error1?.message} {error2?.message}</p>;
+    errorMsg = <p className='text-red-700'>Error : {error?.message} {error1?.message} {error2?.message} {error3?.message}</p>;
     }
 
 
@@ -153,7 +155,8 @@ if (sending) {
 
 
             <div className="text-center sign mt-5">
-                <button onClick={handleGoogleSignIn} className='flex sign bg-amber-400 items-center mx-auto google-button rounded '><img className='w-10 h-10 rounded-full mr-3 ' src={googleLogo} alt="" /><p style={{paddingRight:'30px'}}className='ml-5 text-lg text-black'>Signin with Google</p></button>
+                <button onClick={handleGoogleSignIn} className='flex sign 
+                bg-green-700  items-center mx-auto google-button rounded '><img className='w-10 h-10 rounded-full mr-3 ' src={googleLogo} alt="" /><p style={{ paddingRight: '30px' }} className='ml-5 text-lg text-white'>Signin with Google</p></button>
             </div>
             <div className="text-center ">
                 <button onClick={()=> signInWithGithub()}className='flex sign w-100 bg-white mt-5 items-center mx-auto google-button rounded '><img className='w-15 h-10 rounded-full mr-3' src={githubLogo} alt="" /><p className='ml-2  text-lg' style={{paddingRight:'30px'}}>Signin with GitHub</p></button>
